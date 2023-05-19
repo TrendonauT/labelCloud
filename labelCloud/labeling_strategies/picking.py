@@ -27,6 +27,9 @@ class PickingStrategy(BaseLabelingStrategy):
         )
         self.tmp_p1: Optional[Point3D] = None
         self.bbox_z_rotation: float = 0
+        ########################################
+        self.bbox_text: str = 'AAAAAAAAAAAAAAAAAAAAAAAA'
+        ########################################
 
     def register_point(self, new_point: Point3D) -> None:
         self.point_1 = new_point
@@ -34,6 +37,11 @@ class PickingStrategy(BaseLabelingStrategy):
 
     def register_tmp_point(self, new_tmp_point: Point3D) -> None:
         self.tmp_p1 = new_tmp_point
+    
+    #############################################################
+    def register_tmp_point(self, new_text: str) -> None:
+        self.bbox_text = new_text
+    #############################################################
 
     def register_scrolling(self, distance: float) -> None:
         self.bbox_z_rotation += distance // 30
@@ -51,6 +59,9 @@ class PickingStrategy(BaseLabelingStrategy):
                 )
             )
             tmp_bbox.set_z_rotation(self.bbox_z_rotation)
+            #######################################################
+            tmp_bbox.set_text(self.bbox_text)
+            #######################################################
             ogl.draw_cuboid(
                 tmp_bbox.get_vertices(), draw_vertices=True, vertex_color=(1, 1, 0, 1)
             )
@@ -69,6 +80,9 @@ class PickingStrategy(BaseLabelingStrategy):
             )
         )
         final_bbox.set_z_rotation(self.bbox_z_rotation)
+        #################################################
+        final_bbox.set_text(self.bbox_text)
+        ###############################################
         return final_bbox
 
     def reset(self) -> None:

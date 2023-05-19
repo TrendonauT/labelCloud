@@ -31,7 +31,11 @@ class BBox(object):
         length: Optional[float] = None,
         width: Optional[float] = None,
         height: Optional[float] = None,
+  
     ) -> None:
+        ###############################
+        self.text: str = 'No Text Allocated'
+        ###############################
         self.center: Point3D = (cx, cy, cz)
         self.length: float = length or config.getfloat(
             "LABEL", "STD_BOUNDINGBOX_LENGTH"
@@ -86,7 +90,10 @@ class BBox(object):
 
     def get_volume(self) -> float:
         return self.length * self.width * self.height
-
+    #############################################
+    def get_text(self) -> str:
+        return self.text
+    #############################################
     # SETTERS
 
     def set_classname(self, classname: str) -> None:
@@ -141,6 +148,11 @@ class BBox(object):
 
     def set_z_translation(self, z_translation: float) -> None:
         self.center = (*self.center[:2], z_translation)
+
+    #############################################################
+    def set_text(self, text: str) -> None:
+        self.text = text
+    #####################################################
 
     # Updates the dimension of the BBox (important after scaling!)
     def set_axis_aligned_verticies(self) -> None:

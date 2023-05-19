@@ -46,6 +46,7 @@ class BaseLabelFormat(ABC):
     def save_label_to_file(self, pcd_path: Path, data: Union[dict, str]) -> Path:
         label_path = self.label_folder.joinpath(pcd_path.stem + self.FILE_ENDING)
 
+
         if label_path.is_file():
             logging.info("File %s already exists, replacing file ..." % label_path)
         if label_path.suffix == ".json":

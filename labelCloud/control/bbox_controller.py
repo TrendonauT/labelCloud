@@ -117,7 +117,19 @@ class BoundingBoxController(object):
             )
         else:
             self.deselect_bbox()
+    ######################################################################################3
+    def set_active_bbox_text(self, text) -> None:
+        self.get_active_bbox().text = text
+        print(self.get_active_bbox().text)
 
+    def get_bbox_text(self) -> str:
+        if type(self.get_active_bbox().text) != str:
+            self.get_active_bbox().text = 'No text Allocated'
+        print(type(self.get_active_bbox().text))
+        return self.get_active_bbox().text  # type: ignore
+        
+        
+    #########################################################################################
     @has_active_bbox_decorator
     def set_classname(self, new_class: str) -> None:
         self.get_active_bbox().set_classname(new_class)  # type: ignore

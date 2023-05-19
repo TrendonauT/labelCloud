@@ -35,6 +35,7 @@ if TYPE_CHECKING:
     from ..control.controller import Controller
 
 
+
 def string_is_float(string: str, recect_negative: bool = False) -> bool:
     """Returns True if string can be converted to float"""
     try:
@@ -199,6 +200,12 @@ class GUI(QtWidgets.QMainWindow):
         self.button_deselect_label: QtWidgets.QPushButton
         self.button_delete_label: QtWidgets.QPushButton
         self.button_assign_label: QtWidgets.QPushButton
+        ####################################################################################
+        self.BBox_text: QtWidgets.QLineEdit
+        self.BBox_status_label: QtWidgets.QLabel
+        self.OK: QtWidgets.QPushButton
+        self.BBox_current_text: QtWidgets.QLabel
+        ####################################################################################
 
         # label list actions
         # self.act_rename_class = QtWidgets.QAction("Rename class") #TODO: Implement!
@@ -267,7 +274,11 @@ class GUI(QtWidgets.QMainWindow):
         self.timer.timeout.connect(self.controller.loop_gui)
         self.timer.start()
 
+
+
+    
     # Event connectors
+
     def connect_events(self) -> None:
         # POINTCLOUD CONTROL
         self.button_next_pcd.clicked.connect(
@@ -318,7 +329,33 @@ class GUI(QtWidgets.QMainWindow):
         )
         self.label_list.currentRowChanged.connect(
             self.controller.bbox_controller.set_active_bbox
+
         )
+
+        #####################################################################
+        
+        self.label_list.currentRowChanged.connect(
+            #lambda: self.BBox_text.setText(self.label_list.currentItem().text())
+            self.text_box_display
+        )
+        self.label_list.currentRowChanged.connect(
+            # lambda: self.BBox_text.setText(self.label_list.currentItem().text())
+            self.reset_status_gui
+        )
+
+        self.BBox_text.returnPressed.connect(
+            #self.controller.bbox_controller.set_active_bbox_text
+            self.text_box_input
+        )
+
+        self.OK.pressed.connect(
+            # self.controller.bbox_controller.set_active_bbox_text
+            self.text_box_input
+        )
+
+        
+        ######################################################################
+
         self.button_assign_label.clicked.connect(
             self.controller.bbox_controller.assign_point_label_in_active_box
         )
@@ -396,6 +433,28 @@ class GUI(QtWidgets.QMainWindow):
         self.act_align_pcd.toggled.connect(self.controller.align_mode.change_activation)
         self.act_change_settings.triggered.connect(self.show_settings_dialog)
 
+###########################################################################
+    
+    def text_box_display(self) -> None:
+        self.BBox_text.setPlaceholderText('Enter object decription')
+        
+    def text_box_input(self) -> None:
+        text = self.BBox_text.text()
+        print(text)
+        self.controller.bbox_controller.set_active_bbox_text(text)
+        self.BBox_status_label.setText('Saved!')
+        self.BBox_current_text.setText(text)
+
+
+    def reset_status_gui(self) -> None:
+        self.BBox_status_label.setText('None')
+        self.BBox_text.clear()
+        self.BBox_text.setPlaceholderText('Enter object decription')
+        self.BBox_current_text.setText(self.controller.bbox_controller.get_bbox_text())
+    
+
+
+#############################################################################
     def set_checkbox_states(self) -> None:
         self.act_propagate_labels.setChecked(
             config.getboolean("LABEL", "propagate_labels")
@@ -510,6 +569,7 @@ class GUI(QtWidgets.QMainWindow):
         msg.exec_()
 
     # VISUALIZATION METHODS
+
 
     def set_pcd_label(self, pcd_name: str) -> None:
         self.label_current_pcd.setText("Current: <em>%s</em>" % pcd_name)

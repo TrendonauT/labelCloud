@@ -25,7 +25,11 @@ class CentroidFormat(BaseLabelFormat):
                     rotations = map(rel2abs_rotation, rotations)
                 bbox.set_rotations(*rotations)
                 bbox.set_classname(label["name"])
+                #################################################
+                bbox.set_text(label['text'])
+                #################################################
                 labels.append(bbox)
+
             logging.info(
                 "Imported %s labels from %s." % (len(data["objects"]), label_path)
             )
@@ -61,6 +65,9 @@ class CentroidFormat(BaseLabelFormat):
                 str(axis): self.round_dec(angle)
                 for axis, angle in zip(["x", "y", "z"], conv_rotations)
             }
+            ##########################################
+            label['text'] = bbox.get_text()
+            ##########################################
             data["objects"].append(label)
 
         # Save to JSON
@@ -68,4 +75,5 @@ class CentroidFormat(BaseLabelFormat):
         logging.info(
             f"Exported {len(bboxes)} labels to {label_path} "
             f"in {self.__class__.__name__} formatting!"
+
         )

@@ -1513,6 +1513,83 @@
         </property>
        </widget>
       </item>
+#############################################
+      <item>
+	 <widget class="QLabel" name="BBox_text_label">
+       <property name="font">
+         <font>
+           <family>DejaVu Sans,Arial</family>
+             <weight>75</weight>
+             <bold>true</bold>
+          </font>
+       </property>
+	 <property name='text'>
+	  <string>Enter object description here: </string>
+       </property>
+       </widget> 
+      </item>
+
+      <item>
+	   <widget class="QLineEdit" name="BBox_text">
+       </widget>
+      </item>
+
+       <item>
+         <widget class="QPushButton" name="OK">
+          <property name="text">
+           <string>OK</string>
+          </property>
+         </widget>
+       </item>
+
+
+      <item>
+	   <widget class="QLabel" name="BBox_text_status">
+        <property name="font">
+         <font>
+           <family>DejaVu Sans,Arial</family>
+             <weight>75</weight>
+             <bold>true</bold>
+          </font>
+       </property>
+        <property name="text">
+              <string>Status:</string>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+	   <widget class="QLabel" name="BBox_status_label">
+        <property name="text">
+              <string>Status</string>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+	   <widget class="QLabel" name="Current_BBox_text">
+        <property name="font">
+         <font>
+           <family>DejaVu Sans,Arial</family>
+             <weight>75</weight>
+             <bold>true</bold>
+          </font>
+       </property>
+        <property name="text">
+              <string>Selected Bounding Box Text:</string>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+	   <widget class="QLabel" name="BBox_current_text">
+        <property name="text">
+              <string>CurrentText</string>
+        </property>
+       </widget>
+      </item>
+
+####################################################
       <item>
        <spacer name="verticalSpacer_3">
         <property name="orientation">
